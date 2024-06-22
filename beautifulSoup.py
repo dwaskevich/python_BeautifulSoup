@@ -1,23 +1,25 @@
-import sys
 import requests
 from bs4 import BeautifulSoup
 
 baseURL = 'https://github.com/'  # Github domain
 
 # get user input
-url = input("Enter Github user name: ")
+while True:
+    url = input("Enter Github user name: ")
 
-url = baseURL + url  # generate full url
-print(url)
+    url = baseURL + url  # generate full url
+    print(url)
 
-# Send a GET request to user's github landing page
-response = requests.get(url)
+    # Send a GET request to the full/generated url (i.e. user's github landing page)
+    response = requests.get(url)
 
-# check for response
-if response.status_code != requests.codes.ok:
-    print('No response from ' + url)
-    sys.exit(1)
+    # check for server response
+    if response.status_code == requests.codes.ok:
+        break
+    else:
+        print('No response from ' + url)
 
+# process server response
 html_doc = response.text  # extract html contents
 soup = BeautifulSoup(html_doc, 'html.parser')  # use BeautifulSoup to parse html
 
@@ -28,7 +30,7 @@ repoURL = ''
 for tag in soup.find_all('a', {'data-tab-item': 'repositories'}):
     repoURL = tag.get('href')
 
-# construct repositories url
+# construct repositories url (remove trailing '/' on base URL to avoid double slash)
 url = baseURL.removesuffix('/') + repoURL
 
 print('Repositories url link: ', url)  # put link in console

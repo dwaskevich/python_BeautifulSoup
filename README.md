@@ -10,3 +10,5 @@ BeautifulSoup html parser is used to locate the 'a' tags associated with reposit
 Another html request is issued with the extracted repo url and BeautifulSoup is again used to locate 'a' tags with repository names (itemprop attribute = name codeRepository) and url's (href).
 
 Finally, repository names and clickable url's are output to the console.
+
+NOTE: github seems to respond to many user names with 6-7 characters (or less) ... often reporting 0 repositories.
