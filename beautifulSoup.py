@@ -43,7 +43,6 @@ numRepos = 0  # variable to count number of repositories
 
 # find all public repositories, print names and url's
 for tag in soup.find_all('a', {'itemprop': 'name codeRepository'}):
-    # print(tag.string, tag.get('href'))
     print(tag.string, baseURL.removesuffix('/') + tag.get('href'))
     numRepos += 1
 
